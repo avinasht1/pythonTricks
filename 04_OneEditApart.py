@@ -8,25 +8,28 @@ __author__ = 'atalanki'
 # Remove one character
 # Replace exactly one character
 
-def OneEditApart(s1, s2):
+def isOneEditApart(s1, s2):
     """
     :param s1: First word
     :param s2: Second word
     :return: True if they are 1 edit away, False otherwise
     """
+    editCount = 0
+    if abs(len(s1) - len(s2)) > 1:
+        editCount = abs(len(s1) - len(s2))
 
-    editCount = abs(len(s1) - len(s2))
     i = 0
     j = 0
     while editCount <= 1 and i < len(s1) and j < len(s2):
         if s1[i] != s2[j]:
             editCount += 1
-        if (j + 1) < len(s2):
-            if s1[i] == s2[j + 1]:
-                j += 1
-        if (i + 1) < len(s1):
-            if s1[i + 1] == s2[j]:
-                i += 1
+            if (j + 1) < len(s2):
+                if s1[i] == s2[j + 1]:
+                    j += 1
+            if (i + 1) < len(s1):
+                if s1[i + 1] == s2[j]:
+                    i += 1
+        editCount = editCount + len(s1) - i + len(s2) - j
         i += 1
         j += 1
 
@@ -37,10 +40,17 @@ def OneEditApart(s1, s2):
         return False
 
 
-str1 = 'aaaaaaa'
-str2 = 'aaaaaaa'
+# Testing
+s1, s2 = 'xyz', 'xz'
+print isOneEditApart(s1, s2)  # True
+s1, s2 = 'xyz', 'xyk'
+print isOneEditApart(s1, s2)  # True
+s1, s2 = 'xy', 'xyz'
+print isOneEditApart(s1, s2)  # True
 
-if OneEditApart(str1, str2) == True:
-    print "%s and %s are One edit apart" % (str1, str2)
-else:
-    print "No, %s and %s are not One edit apart" % (str1, str2)
+s1, s2 = 'xyz', 'xyz'
+print isOneEditApart(s1, s2)  # False
+s1, s2 = 'xyz', 'xzy'
+print isOneEditApart(s1, s2)  # False
+s1, s2 = 'x', 'xyz'
+print isOneEditApart(s1, s2)  # False
