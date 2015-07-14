@@ -14,12 +14,33 @@ def OneEditApart(s1, s2):
     :param s2: Second word
     :return: True if they are 1 edit away, False otherwise
     """
-    if abs(len(s1) - len(s2)) > 1:
+
+    editCount = abs(len(s1) - len(s2))
+    i = 0
+    j = 0
+    while editCount <= 1 and i < len(s1) and j < len(s2):
+        if s1[i] != s2[j]:
+            editCount += 1
+        if (j + 1) < len(s2):
+            if s1[i] == s2[j + 1]:
+                j += 1
+        if (i + 1) < len(s1):
+            if s1[i + 1] == s2[j]:
+                i += 1
+        i += 1
+        j += 1
+
+    print "Edit Count is %s" % editCount
+    if editCount == 1:
+        return True
+    else:
         return False
-    return True
 
 
-str1 = 'abc'
-str2 = 'defef'
+str1 = 'aaaaaaa'
+str2 = 'aaaaaaa'
 
-print OneEditApart(str1, str2)
+if OneEditApart(str1, str2) == True:
+    print "%s and %s are One edit apart" % (str1, str2)
+else:
+    print "No, %s and %s are not One edit apart" % (str1, str2)
